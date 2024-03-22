@@ -16,7 +16,7 @@ module.exports = withPWA({
   swcMinify: true,
   output: 'export',
   images: { unoptimized: true },
-  basePath: '/salja-knark',
+  basePath: '/chemquest',
   // webpack: (config) => {
   //   config.resolve.fallback = {
   //     fs: false,
