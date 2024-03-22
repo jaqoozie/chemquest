@@ -1,0 +1,638 @@
+<html>
+
+<!-- Mirrored from 78.73.30.113/mha/knark/knark.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Mar 2024 22:24:27 GMT -->
+<head><title>MHA's S�lja Knark-spel!</title></head>
+<body onUnload="spawntopfivewindow();">
+
+
+
+
+
+
+
+<style type="text/css">
+<!--
+.dayClass {
+
+     background-color:WHITE;
+     color:#000000;
+     font-family:Arial;
+	 border:2 SOLID BLACK;
+	 padding-left:4;
+	 padding-right:4;
+	text-align:center;
+}
+
+.coatClass {
+	 background-color:#CCCCCC;
+	 border:NON
+	 color:BLACK;
+	 font-family:Arial;
+	 font-size:12px;
+	text-align:center;
+}
+.selClass {
+     background-color:WHITE;
+     color:GREEN;
+     font-family:Arial;
+	 border:2 SOLID BLACK;
+	 padding-left:4;
+	 padding-right:4;
+	text-align:right;
+  }
+  
+.titleClass {
+     background-color:WHITE;
+     font-family:Arial;
+     border-color:BLACK;
+     border-width:3;
+     border-style:solid;
+     font-size:36pt;
+     padding-left:6px;
+     padding-right:6px;
+     height:70;
+     width:500;
+     color:BLACK;
+     text-align:center;
+    }
+
+.buttClass {
+     background-color:CCCCCC;
+     font-family:Arial;
+     font-size:12pt;
+	 font-weight:BOLD;
+     color:BLACK;
+    }
+
+.layerClass{
+	  background-color:FEFEFE;
+	  border:2 SOLID BLACK;
+	  text-align:center;
+	  left:20%;
+	  top:15%;
+	  right:20%;
+	  bottom:25%;
+	  position:absolute;
+	  visibility:hidden;
+	  z-index:1;
+	 }
+	 
+.b{
+	  font-family:Arial;
+	  font-size:16;
+	  border:NONE;
+	  background-color:WHITE;
+	  font-weight:BOLD;
+	  text-align:center;
+	 }
+
+.textClass{
+	  border:1 SOLID BLACK;
+	  text-align:center;
+	  font-family:Arial;
+	 }
+// -->
+</style>
+<body bgcolor="#CCCCCC">
+<div id="gameLayer2" class = layerClass><form name = "killForm">
+<font size = 7 >B�ngen tr�lar!</font><hr noshade><br>
+<table border = 0>
+<tr>
+       <td width = 300 align = left><font class = b><center>HJ�LTEN: </center></font><center><input name="yourHp" type="text" value="50" size = 3 class = b></center><p><center><img src="hero2.gif"></center></td><td><textarea name="copText" rows= 5 cols= 20 class = textClass></textarea></td>
+       <td width = 300 align = right><font class = b><center>B�NGEN: </center></font><center><input name="copsHp" type="text" value="50" size = 3 class = b></center><p><center><img src="snut2.gif"></center></td>
+</tr>
+</table>
+<br><br>
+<input type="button" value="Skjut en snut!" onClick = "killCops();"> 
+<input type="button" value="Fly" onClick = "runAway()"> 
+</form>
+</div>
+<div id = "gameLayer1">
+<center><img src="text.gif"><br></center>
+<center>
+<form action="#" name="drugform"><font class="impClass"><b>St�lar:</b></font> <input name="money" class="selClass" type="text" value="$2500"><br>
+<font class = coatClass>Plats f�r knark: </font><input class = coatClass name="spaceLeft" type="text" value="000" size = 3><font class = coatClass>/</font><input class = coatClass name="spaceAvail" type="text" value="000" size = 3>
+<table>
+<tr>
+<td>
+<center><input type="button" class="buttClass" value="K�p" name="buy" onclick="buyit();"><br>
+ <font class="impClass">Knark Till Salu:</font><br>
+ <select name="DrugsForSale" class="selClass2" size="12">
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+</select> <select name="DrugPrices" class="selClass2" size="12">
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+</select></center>
+</td>
+<td>
+<center><input type="button" class="buttClass" value="S�lj" name="sell" onclick="sellit();"><br>
+ <font class="impClass">Ditt Knark:</font><br>
+ <select name="DrugsYouHave" class="selClass2" size="12">
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+</select> <select name="DrugPrice" class="selClass2" size="12">
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+<option></option>
+</select></center>
+</td>
+</tr>
+</table>
+
+<br>
+ <input type="button" class="buttClass" value="Forts�tt" name="Done" onclick="RefreshSale();"><br>
+<br>
+ <font class="impClass">Dagar Kvar:</font> <input name="left" class="dayClass" type="text" value="31" size="2"><br><br>
+ <font class="impClass">Ditt b�sta hittills:</font> <input name="score" class="selClass" type="text" value="$0"><br>
+
+</form>
+</center>
+</div>
+
+<script language="JavaScript" type="text/javascript">
+ var isMinNS4 = (navigator.appName.indexOf("Netscape") >= 0 &&
+                parseFloat(navigator.appVersion) >= 4) ? 1 : 0;
+var isMinIE4 = (document.all) ? 1 : 0;
+var isMinIE5 = (isMinIE4 && navigator.appVersion.indexOf("5.") >= 0) ? 1 : 0;
+
+var x,firstTime;
+var cash = 2500;
+var daysleft = 32; 
+var yHP = 50;
+var cHP = 50;
+
+firstTime = 0; 
+drugs = ["Marijuana","Svampar","LSD","Opium","Heroin","Brass","Nuke","Kokain","Tjack","Meskalin","Crack","Exstacy"]
+setprices = [420,500,1500,2000,10000,1000,7000,15000,200,300,3000,30]
+price = new Array(12)
+yourdrugs = new Array(12)
+yourprice = new Array(12)
+quants = new Array(12)
+var quant;
+for (x = 0; x < 12; x++){
+ yourdrugs[x] = "";
+ yourprice[x] = "";
+ quants[x] = "";
+}
+
+function hideLayer(layer) {
+
+  if (isMinNS4)
+    layer.visibility = "hide";
+  if (isMinIE4)
+    layer.style.visibility = "hidden";
+}
+
+function showLayer(layer) {
+
+  if (isMinNS4)
+    layer.visibility = "show";
+  if (isMinIE4)
+    layer.style.visibility = "visible";
+}
+
+
+function setCookie(name, value, days) {
+   var expire = new Date();
+   expire.setTime(expire.getTime() + Math.round(86400000*days));
+   document.cookie = name + "=" + escape(value)
+   + ((expire == null) ? "" : ("; expires=" + expire.toGMTString()))
+}
+
+function getCookie(Name) {
+   var search = Name + "="
+   if (document.cookie.length > 0) { 
+      offset = document.cookie.indexOf(search) 
+      if (offset != -1) { 
+         offset += search.length 
+         end = document.cookie.indexOf(";", offset) 
+         if (end == -1) 
+            end = document.cookie.length
+         return unescape(document.cookie.substring(offset, end))
+      } 
+   }
+}
+
+function random(maxValue)
+{
+ var randscript = -1
+ while (randscript < 1 || randscript > maxValue || isNaN(randscript)){
+  randscript = parseInt(Math.random()*(maxValue+1))
+ }
+ return randscript
+}
+
+function killCops(){
+ var hit = random(20);
+ cHP = Number(cHP) - Number(hit);
+ killForm.copText.value = "Du orsakade " + Number(hit) + " kulh�l."; 
+ if(refreshCops() == 2){
+  hit = random(10000) + 10000 * 2 / 1.52 + random(2000);
+  alert("Du m�rdade snuten och tj�nade " + Currency(hit) + " p� det!");
+  cash = cash + hit;
+  showLayer(gameLayer1);
+  hideLayer(gameLayer2);
+  firstTime = 0; 
+  RefreshSale();
+  return;
+ };
+ hit = random(20);
+ yHP = Number(yHP) - Number(hit);
+ killForm.copText.value = killForm.copText.value + "\n\nB�ngen orsakade " + Number(hit) + " kulh�l p� dig!!"; 
+ if(refreshCops() == 1){
+  alert("Du fick k�ka bly, DU �R TOT MAL!!");
+  daysleft = 0;
+  showLayer(gameLayer1);
+  hideLayer(gameLayer2);
+  firstTime = 0; 
+  RefreshSale();
+ };
+}
+
+function runAway(){
+ var run = random(2);
+ if (run == 1) {
+  alert("Du lyckades fly.");
+  showLayer(gameLayer1);
+  hideLayer(gameLayer2);
+  return;
+ }
+ if (run == 2) 
+  alert("Det gick inte, f�rs�k igen eller sl�ss som en man.");
+  hit = random(20);
+  yHP = Number(yHP) - Number(hit);
+  killForm.copText.value = "B�ngen orsakade " + Number(hit) + "kulh�l p� dig."; 
+ if(refreshCops() == 1){
+  alert("B�ngen sp�ade skiten ur dig!!");
+  daysleft = 0;
+  showLayer(gameLayer1);
+  hideLayer(gameLayer2);
+  RefreshSale();
+ };
+
+}
+
+function refreshCops()
+{
+ killForm.yourHp.value = Number(yHP);
+ killForm.copsHp.value = Number(cHP);
+ if (yHP <= 0) {
+  return 1;
+ }
+ if (cHP <= 0) {
+  return 2;
+ }
+}
+
+function Currency(number) {
+    
+    var num = new String(number);
+    if(num.indexOf(".") == -1) {
+        intLen = num.length;
+        toEnd = intLen;
+        var strLeft = new String(num.substring(0, toEnd));
+        var strRight = new String("00");
+    }
+    else {
+        pos = eval(num.indexOf("."));
+        var strLeft = new String(num.substring(0, pos));
+        intToEnd = num.length;
+        intThing = pos + 1;
+        var strRight = new String(num.substring(intThing, intToEnd));
+            
+        if(strRight.length > 2) {
+            nextInt = strRight.charAt(2);
+            if (nextInt >= 5) {
+                strRight = new String(strRight.substring(0, 2));
+                strRight = new String(eval((strRight * 1) + 1));
+                if((strRight * 1) >= 100) {
+                    strRight = "00";
+                    strLeft = new String(eval((strLeft * 1) + 1));
+                }               
+                if(strRight.length <= 1) {
+                    strRight = new String("0" + strRight);
+                }
+            }
+            else {
+                strRight = new String(strRight.substring(0, 2));
+            }
+        }
+        else {
+            if(strRight.length != 2) {
+                strRight = strRight + "0";
+            }
+        }
+    }
+    if(strLeft.length > 3) {
+        var curPos = (strLeft.length - 3);
+        while(curPos > 0) {
+            var remainingLeft = new String(strLeft.substring(0, curPos));
+            var strLeftLeft = new String(strLeft.substring(0, curPos));
+            var strLeftRight = new String(strLeft.substring(curPos, strLeft.length));
+            strLeft = new String(strLeftLeft + "," + strLeftRight);
+            curPos = (remainingLeft.length - 3);
+        }
+    }
+
+    strWhole = strLeft //+ "." + strRight;
+    finalValue = "$" + strWhole;
+    return(finalValue);
+}
+
+function calcmax(p){
+var mp 
+var max = sAvail - sLeft;
+ for (x = 0; x <= max; x++){
+  mp = p * x;
+  if ((mp >= cash) || (x == max)){
+   return x;  
+  }  
+ }
+}
+
+function randomevent(){
+ var y = random(3);
+ if (y == 3){
+  var xx = random(18); 
+  if (xx == 4) {
+   alert("Fr�lsningarm�n delar ut gratis LSD, priserna �r skitl�ga!");
+   price[2] = 100 + random(35); 
+  }
+  if (xx == 2) {
+   alert("Uteliggarna �r desperata och k�per Tjack f�r dyra pengar.");
+   price[8] = 1000 + random(500);
+  }
+  if (xx == 3) {
+   alert("Marijuanan �r v�ldigt billig just nu.");
+   price[0] = 10 + random(100);
+  }
+  if (xx == 5) {
+   var lost = random(2000);
+   if ((cash - lost) < 0 ) lost = cash;
+   alert("Du blev r�nad p� " + Currency(lost));   
+   cash = cash - lost; 
+   if (cash < 0 ) cash = 0; 
+  }
+  if (xx == 1) {
+   alert("�gan vill ha kokain! Han g�r g�rna till �verpriser.");
+   price[7] = 25000 + random (12000);
+  }
+  if (xx == 6) {
+   alert("B�ngen beslagtar stora m�ngder Marijuana, priserna h�js.");
+   price[0] = 1000 + random(1000);
+  }
+  if (xx == 7){ 
+   var poo = random(5);
+   x = random(12) -1;
+   alert("Haschman bjuder dig p� lite " + drugs[x] + ".");
+   yourdrugs[x] = drugs[x]; 
+   yourprice[x] = 0;
+   quants[x] = Number(quants[x]) + Number(poo);
+   sLeft = Number(sLeft) + Number(poo);
+   showyours();
+  }
+  if (xx == 8){
+   x = random(12) - 1
+   alert("Lagerrensning p� " + drugs[x] + ".");
+   price[x] = price[x] / 3;
+   
+  }
+  if (xx == 9) {
+   alert("Hippies i stan. Marijuana, Svamp, och LSD-priserna �r skyh�ga!");
+   price[0] = 1000 + random(420);
+   price[1] = 2000 + random(2000);
+   price[2] = 4000 + random(2000);
+  }
+  if (xx == 10) {
+   alert("Stort beslag av Opium, priserna �r helt sansl�sa!!");
+   price[3] = 10000 + random(10000);
+  }
+  if (xx == 11) {
+   x = random(12) - 1;
+   alert("Snuten beslagtar m�ngder av "+ drugs[x] + ". Priserna f�rdubblade!");
+   price[x] = price[x] * 2;   
+  }
+  if (xx == 12) {
+   x = random(12) - 1;
+   alert("Ful " + drugs[x] + " cirkulerar! Priserna 1/4 av vanliga.");
+   price[x] = price[x] / 4
+  }
+  if (xx == 14) {
+   alert("Inbrott p� apoteket, Exstacypriserna l�ga.");
+   price[11] = 1 + random(10);
+  }
+  if (xx == 15) {
+   x = 500 + random(100);
+   var x2 = confirm("Vill du modifiera din knarks�ljarjacka, s� att den rymmer 50 p�sar till f�r ynka " + Currency(x) + "?");
+   if ((x2 == true) && (cash >= x)) {
+    cash = cash - Number(x);
+	sAvail = Number(sAvail) + 50;
+   }else if ((x2 == true) && (cash < x)) {
+    alert("Du har f�r lite st�lar ser jag!");
+   }
+  }
+  if (xx == 16) {
+   alert("Pounders betalar mycket pengar f�r lite heroin.");
+   price[x] = 20000 + random(20000);
+  }
+  if ((xx == 17) || (xx == 13) || (xx == 18)){
+   alert("B�ngen �r h�r, det blir skottlossning!");
+   hideLayer(gameLayer1);
+   showLayer(gameLayer2);
+   killForm.copText.value = "";
+   yHP = 50;
+   cHP = 50;
+   refreshCops();
+  }
+ }
+}
+
+function showyours(){
+ for (x = 0; x < 12; x++){ 
+  drugform.DrugsYouHave.options[x].text = quants[x] + " - " + yourdrugs[x];
+  drugform.DrugPrice.options[x].text = Currency(yourprice[x]);
+ }
+}
+
+function sellit(){
+ var sel = drugform.DrugsYouHave.selectedIndex; 
+ if (sel == -1) { 
+  alert("V�lj en drog f�rst.");
+  return;
+ } 
+ quant = prompt("Hur mycket " + drugs[sel] + " vill du s�lja??", quants[sel]); 
+ if (quant == null) return;
+ if (quant < 0) {
+  alert("Inga negativa tal h�r inte!!");
+  return; 
+ }
+ if ((quants[sel] - quant) >= 0){
+  quants[sel] = Number(quants[sel]) - Number(quant); 
+  cash = cash + price[sel] * Number(quant);
+  drugform.money.value = Currency(cash);
+  sLeft = Number(sLeft) - Number(quant);
+  drugform.spaceAvail.value = sAvail - 1;
+  drugform.spaceLeft.value = sLeft; 
+  if (Number(quants[sel]) == 0){
+   yourdrugs[sel] = "";
+   yourprice[sel] = "";
+   quants[sel] = "";
+  }
+  showyours();
+  drugform.DrugsForSale.selectedIndex = -1; 
+  drugform.DrugPrices.selectedIndex = -1; 
+  drugform.DrugsYouHave.selectedIndex = -1; 
+  drugform.DrugPrice.selectedIndex = -1; 
+ }
+}
+
+function buyit(){
+ var sel = drugform.DrugsForSale.selectedIndex; 
+ if (sel == -1) { 
+  alert("V�lj en drog f�rst!");
+  return;
+ } 
+ quant = prompt("Hur  mycket " + drugs[sel] + " vill du ha?", calcmax(price[sel]) - 1); 
+ if (quant == null) return;
+ if (quant < 0) {
+  alert("Inga negativa tal, ditt s�p!!");
+  return; }
+ if (quant == 0) return;
+ if (((price[sel] * Number(quant)) <= cash) && ((Number(sLeft) + Number(quant)) <= Number(sAvail) - 1)){
+  quants[sel] = Number(quants[sel]) + Number(quant); 
+  yourdrugs[sel] = drugs[sel];
+  yourprice[sel] = price[sel];
+  cash = cash - price[sel] * Number(quant);
+  sLeft = Number(sLeft) + Number(quant);
+  drugform.spaceAvail.value = sAvail - 1;
+  drugform.spaceLeft.value = sLeft; 
+  showyours();
+  drugform.money.value = Currency(cash); 
+  drugform.DrugsForSale.selectedIndex = -1; 
+  drugform.DrugPrices.selectedIndex = -1; 
+  drugform.DrugsYouHave.selectedIndex = -1; 
+  drugform.DrugPrice.selectedIndex = -1; 
+ }else if ((quant > 0) && (cash < price[sel] * quant)){
+  alert("Du har f�r lite st�lar!");
+  return;
+ }
+  else {
+  alert("Slut p� plats!!!");
+  return;
+ }
+}
+
+function RefreshSale() {
+ for (x = 0; x < 12; x++){
+  if ((x == 0) || (x == 1) || (x == 8) || (x == 9)) {
+   price[x] = setprices[x] + random(420)}
+  else if(x == 11) {price[x] = setprices[x] + random(100)}
+  else if(x == 10) {price[x] = setprices[x] + random(12000)}
+  else {price[x] = setprices[x] + random(8000)}
+ }
+ if (firstTime > 0 )
+  randomevent();
+ else firstTime = 1; 
+ daysleft = daysleft-1; 
+ drugform.left.value = daysleft; 
+ drugform.spaceAvail.value = Number(sAvail -1);
+ drugform.spaceLeft.value = Number(sLeft); 
+ if (daysleft == 1) {
+  alert("Det h�r �r din sista dag!");
+  firstTime = 0; 
+ }
+ if (daysleft <= 0) {
+  alert("Du har fixat " + Currency(cash) + " genom att s�lja knark,  nu �r bin Ladin stolt �ver dig.");
+  daysleft = 31; 
+  for (x = 0; x < 12; x++){
+   if ((x == 0) || (x == 1) || (x == 8) || (x == 9)) {
+    price[x] = setprices[x] + random(420)}
+   else if((x == 10) || (x == 11)) {price[x] = setprices[x] + random(100)}
+   else {price[x] = setprices[x] + random(5000)}
+  }
+  for (x = 0; x < 12; x++){
+   yourdrugs[x] = "";
+   yourprice[x] = "";
+   quants[x] = "";
+  }
+  if (cash > oldScore) {
+   alert("GRATTIS!! Du har slagit ditt eget rekord!!");
+   setCookie("pip182",cash,356);
+   oldScore = cash;
+   drugform.score.value = Currency(cash);
+  }
+  drugform.left.value = daysleft; 
+  cash = 2500;
+  drugform.money.value = Currency(cash);
+  sLeft = 0; 
+  sAvail = 101;
+  drugform.spaceAvail.value = sAvail -1;
+  drugform.spaceLeft.value = sLeft; 
+  showyours();
+ }
+ for (x = 0; x < 12; x++){
+  drugform.DrugsForSale.options[x].text = drugs[x];
+  drugform.DrugPrices.options[x].text = Currency(price[x]);
+  drugform.DrugsForSale.selectedIndex = -1; 
+  drugform.DrugPrices.selectedIndex = -1; 
+  drugform.DrugsYouHave.selectedIndex = -1; 
+  drugform.DrugPrice.selectedIndex = -1;
+  drugform.money.value = Currency(cash); 
+ } 
+}
+RefreshSale();
+showyours(); 
+var sAvail = 101;
+var sLeft = 0;
+drugform.spaceAvail.value = sAvail -1;
+drugform.spaceLeft.value = sLeft; 
+var oldScore = getCookie("pip182");
+if (oldScore == null) oldScore = 0; 
+drugform.score.value = Currency(oldScore);
+if (isMinNS4) alert("S�rry, Netscape funkar inte, och inte Ibrowse heller!");
+
+-->
+</script>
+</font>
+</center>
+</body>

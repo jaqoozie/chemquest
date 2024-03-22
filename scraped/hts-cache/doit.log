@@ -1,0 +1,8 @@
+http://78.73.30.113/mha/knark/knark.html -O /Users/mgs/Knarkspelet/salja_knark/scraped +*.all.net/* -v
+File generated automatically on Wed, 20 Mar 2024 23:24:25, do NOT edit
+
+To update a mirror, just launch httrack without any parameters
+The existing cache will be used (and modified)
+To have other options, retype all parameters and launch HTTrack
+To continue an interrupted mirror, just launch httrack without any parameters
+
