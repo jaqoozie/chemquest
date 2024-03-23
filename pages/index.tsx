@@ -384,6 +384,7 @@ const KnarkGame: React.FC = () => {
         setCash(cash + drugs[sel].price * quantityToSellFromPrompt);
         setSLeft(sLeft - quantityToSellFromPrompt);
         setSAvail(sAvail);
+        yourdrugs[sel].quantity -= quantityToSellFromPrompt;
       } else {
         alert('Slut på plats!!!');
         return;
