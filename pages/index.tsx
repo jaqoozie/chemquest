@@ -460,7 +460,7 @@ const KnarkGame: React.FC = () => {
                     </center>
 
                     <center>
-                      <img src="/salja-knark/hero2.gif" />
+                      <img src="/chemquest/hero2.gif" />
                     </center>
                   </td>
                   <td>
@@ -481,7 +481,7 @@ const KnarkGame: React.FC = () => {
                     </center>
 
                     <center>
-                      <img src="/salja-knark/snut2.gif" />
+                      <img src="/chemquest/snut2.gif" />
                     </center>
                   </td>
                 </tr>
@@ -497,7 +497,7 @@ const KnarkGame: React.FC = () => {
       {gameLayer1 && (
         <div id="gameLayer1">
           <center>
-            <img src="/salja-knark/text.gif" />
+            <img src="/chemquest/text.gif" />
             <br />
           </center>
           <center>
