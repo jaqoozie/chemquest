@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
 
 interface KillForm {
   copText: { value: string };
@@ -48,10 +49,8 @@ const KnarkGame: React.FC = () => {
 
   const RefreshSale = () => {
     clearSelections();
-    let tempDrugs: Drug[] = [];
-    Object.assign(tempDrugs, drugs);
     for (let x = 0; x < 12; x++) {
-      let currentDrug = tempDrugs[x];
+      let currentDrug = drugs[x];
       if (x == 0 || x == 1 || x == 8 || x == 9) {
         currentDrug.price = setprices[x] + random(420);
       } else if (x == 11) {
@@ -77,7 +76,7 @@ const KnarkGame: React.FC = () => {
       );
       setDaysLeft(31);
       for (let x = 0; x < 12; x++) {
-        let currentDrug = tempDrugs[x];
+        let currentDrug = drugs[x];
         if (x == 0 || x == 1 || x == 8 || x == 9) {
           currentDrug.price = setprices[x] + random(420);
         } else if (x == 10 || x == 11) {
@@ -114,7 +113,7 @@ const KnarkGame: React.FC = () => {
   const [selectedDrugToBuy, setSelectedDrugToBuy] = useState(-1);
   const [selectedDrugToSell, setSelectedDrugToSell] = useState(-1);
 
-  const [oldScore, setOldScore] = useState(0); //
+  const [oldScore, setOldScore] = useState(0);
 
   const [killForm, setKillForm] = useState<KillForm>({
     copText: { value: '' },
@@ -239,7 +238,7 @@ const KnarkGame: React.FC = () => {
     for (let x = 0; x <= max; x++) {
       mp = p * x;
       if (mp >= cash || x == max || p * (x + 1) > cash) {
-        return x;
+        return Math.round(x);
       }
     }
     return 0;
@@ -248,7 +247,7 @@ const KnarkGame: React.FC = () => {
   const randomevent = () => {
     let x = random(3);
     console.log(`The chosen random event was ${x}`);
-    if (x === 3) {
+    if (x === -1) {
       alert('Bången är här, det blir skottlossning!');
       setGameLayer1(false);
       setGameLayer2(true);
@@ -290,9 +289,15 @@ const KnarkGame: React.FC = () => {
         let poo = random(5);
         let x = random(12) - 1;
         alert('Haschman bjuder dig på lite ' + drugs[x].name + '.');
-        const savedQuantity = yourdrugs[x].quantity;
-        yourdrugs[x] = drugs[x];
-        yourdrugs[x].quantity += poo + savedQuantity;
+        if (yourdrugs.find((X) => X?.name == drugs[x].name)) {
+          const savedQuantity = yourdrugs[x].quantity;
+          yourdrugs[x] = { ...drugs[x] };
+          yourdrugs[x].quantity += poo + savedQuantity;
+        } else {
+          yourdrugs[x] = { ...drugs[x] };
+          yourdrugs[x].quantity = poo;
+        }
+
         setCash(cash + drugs[x].price * poo);
         setGameLayer1(true);
         setGameLayer2(false);
@@ -398,6 +403,7 @@ const KnarkGame: React.FC = () => {
     }
     clearSelections();
   };
+
   const buyit = () => {
     let sel = selectedDrugToBuy;
     if (sel === -1) {
@@ -420,7 +426,7 @@ const KnarkGame: React.FC = () => {
     }
     if (quantity === 0) return;
     if (drugs[sel].price * quantity <= cash && sLeft + quantity <= sAvail) {
-      yourdrugs[sel] = drugs[sel];
+      yourdrugs[sel] = { ...drugs[sel] };
       yourdrugs[sel].quantity = quantity;
       setCash(cash - drugs[sel].price * quantity);
       setSLeft(sLeft + quantity);
@@ -437,6 +443,7 @@ const KnarkGame: React.FC = () => {
   };
 
   const numberWithCommas = (x: number) => {
+    x = Math.round(x);
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
@@ -628,7 +635,7 @@ const KnarkGame: React.FC = () => {
                           </thead>
                           <tbody>
                             {yourdrugs.length > 0 &&
-                              yourdrugs.map((drug, index) => {
+                              yourdrugs.map((yourDrug, index) => {
                                 let classes = `drugRow`;
                                 if (index === selectedDrugToSell) {
                                   classes += ' selectedDrugRow';
@@ -642,9 +649,9 @@ const KnarkGame: React.FC = () => {
                                     key={index}
                                     className={classes}
                                   >
-                                    <td className="drugColumn">{`${drug.name}(${drug.quantity})`}</td>
+                                    <td className="drugColumn">{`${yourDrug.name}(${yourDrug.quantity})`}</td>
                                     <td className="drugColumn">
-                                      ${numberWithCommas(drug.price)}
+                                      ${numberWithCommas(yourDrug.price)}
                                     </td>
                                   </tr>
                                 );
