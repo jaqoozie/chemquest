@@ -247,7 +247,7 @@ const KnarkGame: React.FC = () => {
   const randomevent = () => {
     let x = random(3);
     console.log(`The chosen random event was ${x}`);
-    if (x === -1) {
+    if (x === 3 && !firstTime) {
       alert('Bången är här, det blir skottlossning!');
       setGameLayer1(false);
       setGameLayer2(true);
