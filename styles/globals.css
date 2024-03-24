@@ -239,12 +239,15 @@ a {
   text-align: left;
 }
 
-
 .selectedDrugRow {
   background-color: red;
 }
 
-.drugTable{
+.drugTable {
   width: 150px;
   min-height: 300px;
+}
+.copFightAction {
+  width: 90px;
+  margin-left: 20px;
 }

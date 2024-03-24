@@ -141,7 +141,7 @@ const KnarkGame: React.FC = () => {
     setCHP(cHP - hit);
     killForm.copText.value = 'Du orsakade ' + hit + ' kulhål.';
     if (refreshCops() === 2) {
-      hit = random(10000) + (10000 * 2) / 1.52 + random(2000);
+      hit = Math.round(random(10000) + (10000 * 2) / 1.52 + random(2000));
       alert('Du mördade snuten och tjänade ' + Currency(hit) + ' på det!');
       setCash(cash + hit);
       setGameLayer1(true);
@@ -248,7 +248,7 @@ const KnarkGame: React.FC = () => {
   const randomevent = () => {
     let x = random(3);
     console.log(`The chosen random event was ${x}`);
-    if (x === 0) {
+    if (x === 3) {
       alert('Bången är här, det blir skottlossning!');
       setGameLayer1(false);
       setGameLayer2(true);
@@ -384,7 +384,13 @@ const KnarkGame: React.FC = () => {
         setCash(cash + drugs[sel].price * quantityToSellFromPrompt);
         setSLeft(sLeft - quantityToSellFromPrompt);
         setSAvail(sAvail);
-        yourdrugs[sel].quantity -= quantityToSellFromPrompt;
+
+        if (yourdrugs[sel].quantity === quantityToSellFromPrompt) {
+          yourdrugs.splice(sel, 1);
+        } else {
+          yourdrugs[sel].quantity =
+            yourdrugs[sel].quantity - quantityToSellFromPrompt;
+        }
       } else {
         alert('Slut på plats!!!');
         return;
@@ -489,8 +495,18 @@ const KnarkGame: React.FC = () => {
             </table>
             <br />
             <br />
-            <input type="button" value="Skjut en snut!" onClick={killCops} />
-            <input type="button" value="Fly" onClick={runAway} />
+            <input
+              type="button"
+              value="Skjut en snut!"
+              className="copFightAction"
+              onClick={killCops}
+            />
+            <input
+              type="button"
+              value="Fly"
+              className="copFightAction"
+              onClick={runAway}
+            />
           </form>
         </div>
       )}
@@ -626,7 +642,7 @@ const KnarkGame: React.FC = () => {
                                     key={index}
                                     className={classes}
                                   >
-                                    <td className="drugColumn">{drug.name}</td>
+                                    <td className="drugColumn">{`${drug.name}(${drug.quantity})`}</td>
                                     <td className="drugColumn">
                                       ${numberWithCommas(drug.price)}
                                     </td>
