@@ -1,6 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+import MazeGame from '@/components/MazeGame/MazeGame';
+import { useRouter } from 'next/router';
 
 interface KillForm {
   copText: { value: string };
@@ -15,6 +17,8 @@ interface Drug {
 }
 
 const KnarkGame: React.FC = () => {
+  const router = useRouter();
+  const showMazeGame = router.query.mupp;
   const cookieName = 'pip182';
   const setCookie = (name: string, value: number) => {
     localStorage.setItem(name, value.toString());
@@ -101,8 +105,8 @@ const KnarkGame: React.FC = () => {
 
   const [cash, setCash] = useState(2500);
   const [daysLeft, setDaysLeft] = useState(32);
-  const [yHP, setYHP] = useState(50);
-  const [cHP, setCHP] = useState(50);
+  const [yourHp, setYourHp] = useState(50);
+  const [copHp, setCopHp] = useState(50);
   const [firstTime, setFirstTime] = useState(0);
   const [yourdrugs, setYourDrugs] = useState<Drug[]>([]);
   const [gameLayer1, setGameLayer1] = useState(true);
@@ -137,7 +141,7 @@ const KnarkGame: React.FC = () => {
 
   const killCops = () => {
     let hit = random(20);
-    setCHP(cHP - hit);
+    setCopHp(copHp - hit);
     killForm.copText.value = 'Du orsakade ' + hit + ' kulhål.';
     if (refreshCops() === 2) {
       hit = Math.round(random(10000) + (10000 * 2) / 1.52 + random(2000));
@@ -150,7 +154,7 @@ const KnarkGame: React.FC = () => {
       return;
     }
     hit = random(20);
-    setYHP(yHP - hit);
+    setYourHp(yourHp - hit);
     killForm.copText.value =
       killForm.copText.value +
       '\n\nBången orsakade ' +
@@ -173,15 +177,15 @@ const KnarkGame: React.FC = () => {
       copsHp: { value: 0 },
     };
     Object.assign(killForm, tempKillForm);
-    tempKillForm.yourHp.value = yHP;
-    tempKillForm.copsHp.value = cHP;
+    tempKillForm.yourHp.value = yourHp;
+    tempKillForm.copsHp.value = copHp;
 
     setKillForm(tempKillForm);
 
-    if (yHP <= 0) {
+    if (yourHp <= 0) {
       return 1;
     }
-    if (cHP <= 0) {
+    if (copHp <= 0) {
       return 2;
     }
 
@@ -199,7 +203,7 @@ const KnarkGame: React.FC = () => {
     if (run === 2) {
       alert('Det gick inte, försök igen eller slåss som en man.');
       let hit = random(20);
-      setYHP(yHP - hit);
+      setYourHp(yourHp - hit);
       killForm.copText.value = 'Bången orsakade ' + hit + ' kulhål på dig.';
       if (refreshCops() === 1) {
         alert('Bången spöade skiten ur dig!!');
@@ -246,14 +250,13 @@ const KnarkGame: React.FC = () => {
 
   const randomevent = () => {
     let x = random(3);
-    console.log(`The chosen random event was ${x}`);
     if (x === 3 && !firstTime) {
       alert('Bången är här, det blir skottlossning!');
       setGameLayer1(false);
       setGameLayer2(true);
       killForm.copText.value = '';
-      setYHP(50);
-      setCHP(50);
+      setYourHp(50);
+      setCopHp(50);
       refreshCops();
     }
     if (x === 1) {
@@ -333,7 +336,7 @@ const KnarkGame: React.FC = () => {
         drugs[x].price = drugs[x].price / 4;
       }
       if (xx === 14) {
-        alert('Inbrott på apoteket, Exstacypriserna l�ga.');
+        alert('Inbrott på apoteket, Exstacypriserna låga.');
         drugs[11].price = 1 + random(10);
       }
       if (xx === 15) {
@@ -359,8 +362,8 @@ const KnarkGame: React.FC = () => {
         setGameLayer1(false);
         setGameLayer2(true);
         killForm.copText.value = '';
-        setYHP(50);
-        setCHP(50);
+        setYourHp(50);
+        setCopHp(50);
         refreshCops();
       }
     }
@@ -449,7 +452,8 @@ const KnarkGame: React.FC = () => {
 
   return (
     <>
-      {gameLayer2 && (
+      {showMazeGame && <MazeGame></MazeGame>}
+      {gameLayer2 && !showMazeGame && (
         <div id="gameLayer2" className="layerClass">
           <form name="killForm">
             <p>Böngen trålar!</p>
@@ -466,7 +470,7 @@ const KnarkGame: React.FC = () => {
                       <input
                         name="yourHp"
                         type="text"
-                        value={yHP}
+                        value={yourHp}
                         className="b"
                         readOnly
                       />
@@ -487,7 +491,7 @@ const KnarkGame: React.FC = () => {
                       <input
                         name="copsHp"
                         type="text"
-                        value={cHP}
+                        value={copHp}
                         className="b"
                         readOnly
                       />
@@ -517,7 +521,7 @@ const KnarkGame: React.FC = () => {
           </form>
         </div>
       )}
-      {gameLayer1 && (
+      {gameLayer1 && !showMazeGame && (
         <div id="gameLayer1">
           <center>
             <img src="/chemquest/text.gif" />

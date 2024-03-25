@@ -251,3 +251,15 @@ a {
   width: 90px;
   margin-left: 20px;
 }
+
+.mazeGameCountDownTimer {
+  width: 100px;
+    height: 100px;
+    display: flex;
+    position: fixed;
+    right: 15px;
+    top: 100px;
+    z-index: 999;
+    color: red;
+    font-weight: bolder;
+}
